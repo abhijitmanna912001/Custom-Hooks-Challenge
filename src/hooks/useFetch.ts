@@ -14,20 +14,17 @@ const useFetch = <T>(url: string) => {
         }
         const result: T = await response.json();
         setData(result);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("An unknown error occurred");
-        }
+      } catch (error: any) {
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, [url]);
 
   return [data, loading, error];
 };
 
-export default useFetch;
+export default useFetch

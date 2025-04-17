@@ -3,12 +3,17 @@ import useForm from "./hooks/useForm";
 import useDebounce from "./hooks/useDebounce";
 import usePrevious from "./hooks/usePrevious";
 import useLocalStorage from "./hooks/useLocalStorage";
+import useFetch from "./hooks/useFetch";
 
 const App = () => {
   const { values, handleChange, handleSubmit } = useForm({
     username: "",
     email: "",
   });
+
+  const [data, loading, error] = useFetch<any>(
+    "https://jsonplaceholder.typicode.com/posts"
+  );
 
   const [inputValue, setInputValue] = useState("");
   const debouncedInput = useDebounce(inputValue, 500);
@@ -68,6 +73,12 @@ const App = () => {
           value={storedValue}
           onChange={(e) => setStoredValue(e.target.value)}
         />
+      </div>
+      <div className="mb-4">
+        <h2 className="text-xl">Fetch Data Example</h2>
+        {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
+        {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
       </div>
     </div>
   );
