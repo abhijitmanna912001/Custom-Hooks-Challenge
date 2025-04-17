@@ -2,6 +2,7 @@ import { useState } from "react";
 import useForm from "./hooks/useForm";
 import useDebounce from "./hooks/useDebounce";
 import usePrevious from "./hooks/usePrevious";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 const App = () => {
   const { values, handleChange, handleSubmit } = useForm({
@@ -16,6 +17,8 @@ const App = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
+
+  const [storedValue, setStoredValue] = useLocalStorage("username", "");
 
   return (
     <div className="p-4">
@@ -55,6 +58,16 @@ const App = () => {
         />
         <p>Debounced Value: {debouncedInput}</p>
         <p>Previous Value: {previousValue}</p>
+      </div>
+      <div className="mb-4">
+        <h2 className="text-xl">Local Storage Example</h2>
+        <input
+          type="text"
+          className="border p-2"
+          placeholder="Set Local Storage"
+          value={storedValue}
+          onChange={(e) => setStoredValue(e.target.value)}
+        />
       </div>
     </div>
   );
