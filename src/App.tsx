@@ -1,10 +1,15 @@
+import { useState } from "react";
 import useForm from "./hooks/useForm";
+import useDebounce from "./hooks/useDebounce";
 
 const App = () => {
   const { values, handleChange, handleSubmit } = useForm({
     username: "",
     email: "",
   });
+
+  const [inputValue, setInputValue] = useState("");
+  const debouncedInput = useDebounce(inputValue, 500);
 
   return (
     <div className="p-4">
@@ -32,6 +37,10 @@ const App = () => {
             Submit
           </button>
         </form>
+      </div>
+      <div className="mb-4">
+        <h2 className="text-xl">Debounced Input Example</h2>
+        <input type="text" className="border p-2" />
       </div>
     </div>
   );
